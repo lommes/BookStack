@@ -168,6 +168,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
 
+        Sunspikes\ClamavValidator\ClamavValidatorServiceProvider::class,
 
         /*
          * Application Service Providers...

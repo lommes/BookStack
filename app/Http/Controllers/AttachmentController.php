@@ -35,10 +35,18 @@ class AttachmentController extends Controller
      */
     public function upload(Request $request)
     {
-        $this->validate($request, [
-            'uploaded_to' => 'required|integer|exists:pages,id',
-            'file' => 'required|file'
-        ]);
+        if(env('CLAMAV_SCAN_UPLOADS')) {
+            $this->validate($request, [
+                'uploaded_to' => 'required|integer|exists:pages,id',
+                'file' => 'required|file|clamav'
+            ]);    
+        } else {
+            $this->validate($request, [
+                'uploaded_to' => 'required|integer|exists:pages,id',
+                'file' => 'required|file'
+            ]);
+        }
+        
 
         $pageId = $request->get('uploaded_to');
         $page = $this->entityRepo->getById('page', $pageId, true);
@@ -65,10 +73,17 @@ class AttachmentController extends Controller
      */
     public function uploadUpdate($attachmentId, Request $request)
     {
-        $this->validate($request, [
-            'uploaded_to' => 'required|integer|exists:pages,id',
-            'file' => 'required|file'
-        ]);
+        if(env('CLAMAV_SCAN_UPLOADS')) {
+            $this->validate($request, [
+                'uploaded_to' => 'required|integer|exists:pages,id',
+                'file' => 'required|file|clamav'
+            ]);    
+        } else {
+            $this->validate($request, [
+                'uploaded_to' => 'required|integer|exists:pages,id',
+                'file' => 'required|file'
+            ]);
+        }
 
         $pageId = $request->get('uploaded_to');
         $page = $this->entityRepo->getById('page', $pageId, true);
